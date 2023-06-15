@@ -8,7 +8,10 @@ namespace PokemonReviewApp.Helpers
     {
         public MappingProfiles()
         {
-            CreateMap<Pokemon, PokemonDto>();
+            CreateMap<Pokemon, PokemonDto>()
+                .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.Reviews));
+            CreateMap<Category, CategoryDto>();
+            CreateMap<Review, ReviewDto>();
         }
     }
 }

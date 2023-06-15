@@ -19,11 +19,11 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Pokemon))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<PokemonDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<Pokemon>> Get()
+        public ActionResult<ICollection<PokemonDto>> Get()
         {
-            var pokemon = this._mapper.Map<IEnumerable<PokemonDto>>(this._repository.GetPokemons());
+            var pokemon = _repository.GetPokemons();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

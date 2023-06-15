@@ -7,5 +7,6 @@ namespace PokemonReviewApp.Dto
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
+        public IEnumerable<ReviewDto> Reviews { get; set; }
     }
 }

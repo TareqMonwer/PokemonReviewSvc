@@ -1,4 +1,7 @@
-﻿using PokemonReviewApp.Data;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using PokemonReviewApp.Data;
+using PokemonReviewApp.Dto;
 using PokemonReviewApp.Interfaces;
 using PokemonReviewApp.Models;
 using System.Xml.Linq;
@@ -8,9 +11,11 @@ namespace PokemonReviewApp.Repository
     public class PokemonRepository : IPokemonRepository
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public PokemonRepository(DataContext context) { 
+        public PokemonRepository(DataContext context, IMapper _mapper) { 
             this._context = context;
+            this._mapper = _mapper;
         }
 
         public Pokemon GetPokemon(int id)
@@ -32,9 +37,12 @@ namespace PokemonReviewApp.Repository
             return ((decimal)reviews.Sum(r => r.Rating) / (decimal)reviews.Count());
         }
 
-        public ICollection<Pokemon> GetPokemons()
+        public ICollection<PokemonDto> GetPokemons()
         {
-            return this._context.Pokemons.ToList();
+            var pokemons = this._mapper.Map<ICollection<PokemonDto>>(this._context.Pokemons.Include(p => p.Reviews).ToList());
+            var plainPokemons = this._context.Pokemons.ToList();
+
+            return pokemons;
         }
 
         public bool PokemonExists(int id)
