@@ -40,6 +40,7 @@ namespace PokemonReviewApp.Repository
         public ICollection<PokemonDto> GetPokemons()
         {
             var pokemons = this._mapper.Map<ICollection<PokemonDto>>(this._context.Pokemons
+                .AsSplitQuery()
                 .Include(p => p.Reviews)
                 .ThenInclude(r => r.Reviewer)
                 .ToList());
