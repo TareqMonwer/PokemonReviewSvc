@@ -39,7 +39,10 @@ namespace PokemonReviewApp.Repository
 
         public ICollection<PokemonDto> GetPokemons()
         {
-            var pokemons = this._mapper.Map<ICollection<PokemonDto>>(this._context.Pokemons.Include(p => p.Reviews).ToList());
+            var pokemons = this._mapper.Map<ICollection<PokemonDto>>(this._context.Pokemons
+                .Include(p => p.Reviews)
+                .ThenInclude(r => r.Reviewer)
+                .ToList());
             var plainPokemons = this._context.Pokemons.ToList();
 
             return pokemons;

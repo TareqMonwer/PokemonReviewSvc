@@ -10,8 +10,11 @@ namespace PokemonReviewApp.Helpers
         {
             CreateMap<Pokemon, PokemonDto>()
                 .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.Reviews));
+            CreateMap<Review, ReviewDto>()
+                .ForMember(dest => dest.Reviewer, opt => opt.MapFrom(src => src.Reviewer));
+            CreateMap<Reviewer, ReviewerDto>();
+
             CreateMap<Category, CategoryDto>();
-            CreateMap<Review, ReviewDto>();
         }
     }
 }
